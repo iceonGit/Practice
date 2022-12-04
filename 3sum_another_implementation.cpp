@@ -48,37 +48,23 @@ void usaco(string filename)
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
 
-void print(int i,int a[],vi &v,int n)
-{
-	if(i==n)
-	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
-	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
 
-	//not take
-	print(i+1,a,v,n);
-
-}
 void solve()
 {
 	int n;
 	cin>>n;
 	int a[n];
-	for(int i =0;i<n;i++)
+	for(int i =0;i<n-2;i++)
 	{
 		cin>>a[i];
 	}
-	vi v;
-	print(0,a,v,n);
+	sort(a,a+n);
+	vector<vector<int>>v;
+
+	for(int i =0;i<n-2;i++)
+	{
+		
+	}
 }
 
 int32_t main()

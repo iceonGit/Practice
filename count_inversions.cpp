@@ -47,38 +47,75 @@ void usaco(string filename)
 	freopen((filename + ".in").c_str(), "r", stdin);
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
-
-void print(int i,int a[],vi &v,int n)
+int merge (int a[],int temp[],int left,int mid,int right)
 {
-	if(i==n)
-	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
-	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
+	int i=left,j=mid,k=left;
+	int inv_count = 0;
 
-	//not take
-	print(i+1,a,v,n);
+	while(i<=mid-1 and j<=right)
+	{
+		if(a[i]<a[j])
+		{
+			temp[k] = a[i];
+			k++;
+			i++;
+		}
+		else
+		{
+			temp[k] = a[j];
+			k++;
+			j++;
+
+			inv_count = inv_count + (mid-i);
+		}
+	}
+	while(i<=mid-1)
+	{
+		temp[k] = a[i];
+		k++;
+		i++;
+	}
+	while(j<=right)
+	{
+		temp[k] = a[j];
+		k++;
+		j++;
+	}
+
+	for(int i = left;i<=right;i++)
+	{
+		a[i] = temp[i];
+	}
+
+	return inv_count;
 
 }
+int split(int a[],int temp[],int left,int right)
+{
+	int mid ,inv_count = 0;
+	if(right>left)
+	{
+		mid = (right+left)/2;
+
+		inv_count += split(a,temp,left,mid);//left part
+		inv_count += split(a,temp,mid+1,right);//right part
+
+		inv_count += merge(a,temp,left,mid+1,right);//merging the array
+	}
+	return inv_count;
+}
+
 void solve()
 {
 	int n;
 	cin>>n;
-	int a[n];
+	int a[n],temp[n];
 	for(int i =0;i<n;i++)
 	{
 		cin>>a[i];
 	}
-	vi v;
-	print(0,a,v,n);
+	int k = split(a,temp,0,n-1);
+	cout<<k<<endl;
 }
 
 int32_t main()

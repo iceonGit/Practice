@@ -48,38 +48,53 @@ void usaco(string filename)
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
 
-void print(int i,int a[],vi &v,int n)
+bool print(int i , vi &ds,int s, int sum, int a[],int n)
 {
-	if(i==n)
-	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
-	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
+    if(i==n)
+    {
+        if(s==sum)
+        {
+            for(auto it:ds)
+            {
+                cout<<it<<" ";
+            }
+            cout<<endl;
+            //condition satisfied
+            return true;
+        }
+        //condition not satisfied
+        else
+        {
+            return false;
+        }
+        
+    }
+    //taking the element
+    ds.pb(a[i]);
+    s+=a[i];
+    if(print(i+1,ds,s,sum,a,n)==true)return true;
+    s-=a[i];
+    ds.pop_back();
 
-	//not take
-	print(i+1,a,v,n);
+    //not taking the element
+    if(print(i+1,ds,s,sum,a,n)==true)return true;
 
+    return false;
 }
+
 void solve()
 {
-	int n;
-	cin>>n;
-	int a[n];
-	for(int i =0;i<n;i++)
-	{
-		cin>>a[i];
-	}
-	vi v;
-	print(0,a,v,n);
+    int n,sum=3;
+    cin>>n;
+    int a[n];
+    for(int i =0;i<n;i++)
+    {
+        cin>>a[i];
+    }	
+    vi ds;
+    print(0,ds,0,sum,a,n);
 }
+
 
 int32_t main()
 {

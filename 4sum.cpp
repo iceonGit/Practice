@@ -40,7 +40,7 @@ using namespace std;
 template<typename T>
 using ordered_set = tree<T,null_type,less<T>,rb_tree_tag, tree_order_statistics_node_update>;
 
-
+ 
 void usaco(string filename) 
 {
   
@@ -48,38 +48,58 @@ void usaco(string filename)
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
 
-void print(int i,int a[],vi &v,int n)
-{
-	if(i==n)
-	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
-	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
 
-	//not take
-	print(i+1,a,v,n);
-
-}
 void solve()
 {
-	int n;
-	cin>>n;
+	int n,x;
+	cin>>n>>x;
 	int a[n];
 	for(int i =0;i<n;i++)
 	{
 		cin>>a[i];
 	}
-	vi v;
-	print(0,a,v,n);
+	sort(a,a+n);
+	vector<vector<int>>v;
+	for(int i =0;i<n-3;i++)
+	{
+		for(int j = i+1;j<n-2;j++)
+		{
+			int sum = x-a[i]-a[j];
+			int l = j+1,r = n-1;
+
+			while(r>l)
+			{
+				if(a[l]+a[r]==sum)
+				{
+					v.pb({a[i],a[j],a[l],a[r]});
+					l++,r--;
+					while (l < r && a[l] == a[l+1]) l++;
+                    while (l < r && a[r] == a[r-1]) r--;
+				}
+				else if(a[l]+a[r]<sum)
+				{
+					l++;
+				}
+				else
+				{
+					r--;
+				}
+				while(j<n-1 and a[j]==a[j+1])j++;
+			}
+			while(i<n-1 and a[i]==a[i+1])i++;
+		}
+	}
+	for(auto &it:v)
+	{
+		for(auto &i:it)
+		{
+			cout<<i<<" ";
+		}
+		cout<<endl;
+	}
 }
+
+
 
 int32_t main()
 {

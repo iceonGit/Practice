@@ -48,37 +48,42 @@ void usaco(string filename)
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
 
-void print(int i,int a[],vi &v,int n)
-{
-	if(i==n)
-	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
-	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
-
-	//not take
-	print(i+1,a,v,n);
-
-}
 void solve()
 {
-	int n;
-	cin>>n;
-	int a[n];
-	for(int i =0;i<n;i++)
+	int m,n,target,c=0;
+	cin>>m>>n>>target;
+	int a[m][n];
+	for(int i = 0;i<m;i++)
 	{
-		cin>>a[i];
+		for(int j = 0;j<n;j++)
+		{
+			cin>>a[i][j];
+		}
 	}
-	vi v;
-	print(0,a,v,n);
+	int low = 0;
+	int high = (m*n)-1;
+	while(low<=high)
+	{
+		int mid = (low + (high-low)/2);
+		if(a[mid/n][mid%n]==target)
+		//to get 2d index from a 2d array indexed
+		//like a 1d array divide the index by no.
+		//of columns to get row index and modulo for
+		//column index
+		{
+			c=1;
+			break;
+		}
+		if(a[mid/n][mid%n]<target)
+		{
+			low = mid + 1;
+		}
+		else
+		{
+			high = mid-1;
+		}
+	}
+	cout<<c<<endl;
 }
 
 int32_t main()

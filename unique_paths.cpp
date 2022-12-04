@@ -48,42 +48,32 @@ void usaco(string filename)
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
 
-void print(int i,int a[],vi &v,int n)
+int grid(int i,int j,int n,int m)
 {
-	if(i==n)
+	if(i==(n-1) and j==(m-1))
 	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
+		return 1;
 	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
-
-	//not take
-	print(i+1,a,v,n);
+	if(i>=n or j>=m)
+	{
+		return 0;
+	}
+	else
+	{
+		return grid(i+1,j,n,m) + grid(i,j+1,n,m);
+	}
 
 }
 void solve()
 {
-	int n;
-	cin>>n;
-	int a[n];
-	for(int i =0;i<n;i++)
-	{
-		cin>>a[i];
-	}
-	vi v;
-	print(0,a,v,n);
+	int m,n;
+	cin>>m>>n;
+	int k = grid(0,0,m,n);
+	cout<<k<<endl;
 }
 
 int32_t main()
 {
- 
 	ios::sync_with_stdio(false);
  
 	cin.tie(0);

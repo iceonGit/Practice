@@ -40,7 +40,7 @@ using namespace std;
 template<typename T>
 using ordered_set = tree<T,null_type,less<T>,rb_tree_tag, tree_order_statistics_node_update>;
 
-
+ 
 void usaco(string filename) 
 {
   
@@ -48,26 +48,7 @@ void usaco(string filename)
 	freopen((filename + ".out").c_str(), "w", stdout);
 } 
 
-void print(int i,int a[],vi &v,int n)
-{
-	if(i==n)
-	{
-		for(int i:v)
-		{
-			cout<<i<<" ";
-		}
-		cout<<endl;
-		return;
-	}
-	//take
-	v.pb(a[i]);
-	print(i+1,a,v,n);
-	v.pop_back();
 
-	//not take
-	print(i+1,a,v,n);
-
-}
 void solve()
 {
 	int n;
@@ -77,9 +58,44 @@ void solve()
 	{
 		cin>>a[i];
 	}
-	vi v;
-	print(0,a,v,n);
+	sort(a,a+n);
+	vector<vector<int>>v;
+	for(int i =0;i<n-2;i++)
+	{
+		int k = n-1;
+		for(int j = i+1;j<k;j++)
+		{
+			while(a[i]+a[j]+a[k]>0)
+			{
+				k--;
+			}
+			if(j<k and a[i]+a[j]+a[k]==0)
+			{
+				vector<int>b = {a[i],a[j],a[k]};
+				if(count(all(v),b)>0)
+				{
+					continue;
+				}
+				else
+				{
+					v.pb(b);
+				}
+				
+
+			}
+		}
+	}
+	for(auto &it:v)
+	{
+		for(auto &el:it)
+		{
+			cout<<el<<" ";
+		}
+		cout<<endl;
+	}
 }
+
+
 
 int32_t main()
 {

@@ -71,6 +71,8 @@ void solve()
 		{
 			tmp = mx;
 			mx = max(a[i],max(mx*a[i],mn*a[i]));
+			//we use a temp variable because the value of mx is 
+			//changed in the above line
 			mn = min(a[i],min(tmp*a[i],mn*a[i]));
 			max_val = max(max_val,mx);
 	
