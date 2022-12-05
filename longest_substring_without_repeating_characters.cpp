@@ -51,30 +51,27 @@ void usaco(string filename)
 
 void solve()
 {
-	int n;
+	int n,len = 0;
 	cin>>n;
 	char str[n];
 	cin>>str;
-	int a = 1, b = 1, k=0,ans = 0;
-	for(int i = 1;i<n and k<n;i++)
+	map<char,int>m;
+	int l = 0;
+	for(int r = 0;r<n;r++)
 	{
-		if(str[k]!=str[i] and str[i]!=str[i-1])
+		if(m.count(str[r]))
 		{
-			a++;
+			int ind = m[str[r]];
+			if(ind>=l)
+			{
+				l = r+1;
+			}
 		}
-		else
-		{
-			k++;
-			b = max(a,b);
-			// cout<<b<<endl;
-			a = 1;
-			ans = max(ans,b);
-		}
-		ans = max(ans,a);
+		m[str[r]] = r;
+		len = max(len,r-l+1);
 		
 	}
-	cout<<ans<<endl;
-
+	cout<<len<<endl;
 }
 
 

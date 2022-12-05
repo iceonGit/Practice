@@ -66,6 +66,7 @@ void solve()
 		if(m.count(sum-k))
 		{
 			c+=m[sum-k];
+			cout<<m[sum-k]<<endl;
 		}
 		m[sum]++;
 	}
